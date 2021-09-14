@@ -1,0 +1,20 @@
+version: '2'
+services:
+  drone-runner:
+    container_name: drone-runner
+    image: drone/drone-runner-docker:1
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DRONE_RPC_HOST=${DRONE_RPC_HOST}
+      - DRONE_RPC_PROTO=${DRONE_RPC_PROTO}
+      - DRONE_RPC_SECRET=${DRONE_RPC_SECRET}
+      - DRONE_RUNNER_CAPACITY=3
+      - DRONE_RUNNER_NETWORKS=drone-runner_default
+      - DRONE_RUNNER_NAME=runner_dev
+    networks:
+      - web_service
+networks:
+  web_service:
+    external: true
